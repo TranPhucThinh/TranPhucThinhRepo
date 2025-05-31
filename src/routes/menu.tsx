@@ -1,3 +1,5 @@
+import Estimator from '@/pages/estimator'
+import WorkPackage from '@/pages/estimator/work-package'
 import Project from '@/pages/project'
 import DetailProject from '@/pages/project/detail'
 import Ticket from '@/pages/project/ticket'
@@ -18,8 +20,14 @@ export const routes: RoutesProps[] = [
   },
   {
     path: '/estimator',
-    element: <div>Estimator</div>,
+    element: <Estimator />,
     title: 'Estimator',
+    fallback: <div>Đang tải trang estimator...</div>
+  },
+  {
+    path: '/estimator/work-packages',
+    element: <WorkPackage />,
+    title: 'Work Packages',
     fallback: <div>Đang tải trang estimator...</div>
   },
   {
@@ -27,12 +35,6 @@ export const routes: RoutesProps[] = [
     element: <Project />,
     title: 'Projects',
     fallback: <div>Đang tải trang projects...</div>
-  },
-  {
-    path: '/projects/projects-children',
-    element: <div>Projects children</div>,
-    title: 'Projects children',
-    fallback: <div>Đang tải trang Projects children...</div>
   },
   {
     path: '/projects/:id/detail',
