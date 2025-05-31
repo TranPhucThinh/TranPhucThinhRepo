@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 
 import { AppSidebar } from '@/components/layouts/sidebar'
-import TopBreadcrumb from '@/components/layouts/TopBreadcrumb'
+import TopBreadcrumb from '@/components/layouts/top-breadcrumb'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 export default function AdminLayout() {
