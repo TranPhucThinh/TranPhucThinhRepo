@@ -24,37 +24,51 @@ const TopBreadcrumb = () => {
       regex: RegExp
     }> = []
 
-    const traverse = (
-      routes: RoutesProps[],
-      parentPath = '',
-      parentTitles: string[] = [],
-      parentPaths: string[] = []
-    ) => {
-      routes.forEach((route) => {
-        const fullPath = parentPath ? `${parentPath}/${route.path}` : `${parentPath}${route.path}`
-        const fullTitles = route.title ? [...parentTitles, route.title] : parentTitles
-        const fullPaths = route.title ? [...parentPaths, fullPath] : parentPaths
+    routes.forEach((route) => {
+      const fullPath = route.path
+      const titles = route.title ? [route.title] : []
+      const paths = route.title ? [fullPath] : []
+
+      if (fullPath.includes(':')) {
+        // dynamic router, thêm vào patterns
+        patterns.push({
+          pattern: fullPath,
+          titles,
+          paths,
+          regex: new RegExp(`^${fullPath.replace(/:([^/]+)/g, '([^/]+)')}$`)
+        })
+      } else {
+        // static router, thêm vào map
+        map[fullPath] = { ...route, titles, paths }
+      }
+
+      if (route.title) {
+        const pathSegments = fullPath.split('/').filter(Boolean)
+        let accumulatedPath = ''
+        const collectedTitles: string[] = []
+        const collectedPaths: string[] = []
+
+        pathSegments.forEach((seg) => {
+          accumulatedPath += `/${seg}`
+          const matchedRoute = routes.find((r) => r.path === accumulatedPath && r.title)
+          if (matchedRoute) {
+            collectedTitles.push(matchedRoute.title!)
+            collectedPaths.push(accumulatedPath)
+          }
+        })
 
         if (fullPath.includes(':')) {
-          // dynamic router, thêm vào patterns
-          patterns.push({
-            pattern: fullPath,
-            titles: fullTitles,
-            paths: fullPaths,
-            regex: new RegExp(`^${fullPath.replace(/:([^/]+)/g, '([^/]+)')}$`)
-          })
+          const patternObj = patterns.find((p) => p.pattern === fullPath)
+          if (patternObj) {
+            patternObj.titles = collectedTitles
+            patternObj.paths = collectedPaths
+          }
         } else {
-          // static router, thêm vào map
-          map[fullPath] = { ...route, titles: fullTitles, paths: fullPaths }
+          map[fullPath].titles = collectedTitles
+          map[fullPath].paths = collectedPaths
         }
-
-        if (route.children) {
-          traverse(route.children, fullPath, fullTitles, fullPaths)
-        }
-      })
-    }
-
-    traverse(routes)
+      }
+    })
 
     return { map, patterns }
   }
@@ -77,9 +91,19 @@ const TopBreadcrumb = () => {
     // Tìm matching pattern
     for (const routePattern of routePatterns) {
       if (routePattern.regex.test(currentPath)) {
+        const match = currentPath.match(routePattern.regex)
+        const paths = routePattern.paths.map((path) => {
+          if (!path.includes(':')) return path
+          let result = path
+          const paramMatches = path.match(/:([^/]+)/g) || []
+          paramMatches.forEach((param, i) => {
+            result = result.replace(param, match![i + 1] || '')
+          })
+          return result
+        })
         return routePattern.titles.map((title, index, arr) => ({
           title,
-          path: routePattern.paths[index] || currentPath,
+          path: paths[index] || currentPath,
           isActive: index === arr.length - 1
         }))
       }

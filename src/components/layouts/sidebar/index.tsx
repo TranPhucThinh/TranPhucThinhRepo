@@ -5,7 +5,7 @@ import { NavMain } from './nav-main'
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className='max-w-60' collapsible='icon' {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader className='p-0'>
         <Header />
       </SidebarHeader>

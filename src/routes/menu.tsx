@@ -1,8 +1,11 @@
+import Project from '@/pages/project'
+import DetailProject from '@/pages/project/detail'
+import Ticket from '@/pages/project/ticket'
 import type { RoutesProps } from '@/types/utils'
 
 export const routes: RoutesProps[] = [
   {
-    path: '/overview',
+    path: '/',
     element: <div>Overview</div>,
     title: 'Overview',
     fallback: <div>Đang tải trang chủ...</div>
@@ -21,22 +24,26 @@ export const routes: RoutesProps[] = [
   },
   {
     path: '/projects',
-    element: <div>Projects</div>,
+    element: <Project />,
     title: 'Projects',
-    fallback: <div>Đang tải trang projects...</div>,
-    children: [
-      {
-        path: 'projects-children',
-        element: <div>Projects children</div>,
-        title: 'Projects children',
-        fallback: <div>Đang tải trang Projects children...</div>
-      },
-      {
-        path: ':id/detail',
-        element: <div>Projects detail</div>,
-        title: 'Projects detail',
-        fallback: <div>Đang tải trang Projects detail...</div>
-      }
-    ]
+    fallback: <div>Đang tải trang projects...</div>
+  },
+  {
+    path: '/projects/projects-children',
+    element: <div>Projects children</div>,
+    title: 'Projects children',
+    fallback: <div>Đang tải trang Projects children...</div>
+  },
+  {
+    path: '/projects/:id/detail',
+    element: <DetailProject />,
+    title: 'Projects detail',
+    fallback: <div>Đang tải trang Projects detail...</div>
+  },
+  {
+    path: '/projects/:id/:ticketId/detail',
+    element: <Ticket />,
+    title: 'Ticket detail',
+    fallback: <div>Đang tải trang Ticket detail...</div>
   }
 ]

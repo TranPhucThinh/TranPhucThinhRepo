@@ -8,6 +8,14 @@ export const NavMain = () => {
   const location = useLocation()
   const currentPath = location.pathname
 
+  const isActive = (itemPath: string) => {
+    if (itemPath === '/') {
+      return currentPath === '/'
+    }
+
+    return currentPath.startsWith(itemPath)
+  }
+
   return (
     <SidebarGroup className='p-4 pt-0'>
       <SidebarMenu>
@@ -18,9 +26,7 @@ export const NavMain = () => {
               tooltip={item.title}
               className={cn(
                 'h-9 rounded-none hover:bg-[#D3D3D3]',
-                currentPath.includes(item.path)
-                  ? 'bg-[#D3D3D3] [&>svg]:text-primary-blue [&>span]:text-primary-blue'
-                  : ''
+                isActive(item.path) ? 'bg-[#D3D3D3] [&>svg]:text-primary-blue [&>span]:text-primary-blue' : ''
               )}
             >
               <Link

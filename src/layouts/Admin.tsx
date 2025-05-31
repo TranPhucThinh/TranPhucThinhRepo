@@ -8,11 +8,11 @@ export default function AdminLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className='pt-5 pb-5'>
-        <section className='pt-3 pb-5 border-b-1 border-gray-200'>
+      <SidebarInset className='p-5'>
+        <section className='pt-3 pb-5 border-b-1 border-secondary-gray'>
           <TopBreadcrumb />
         </section>
-        <section>
+        <section className='min-h-[calc(100vh-94px)]'>
           <Outlet />
         </section>
       </SidebarInset>

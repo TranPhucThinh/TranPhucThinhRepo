@@ -5,7 +5,7 @@ import type { MenuProps } from '@/types/utils'
 export const MENU: MenuProps[] = [
   {
     title: 'Overview',
-    path: '/overview',
+    path: '/',
     icon: LayoutDashboard
   },
   {
