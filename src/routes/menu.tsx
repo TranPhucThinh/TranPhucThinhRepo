@@ -1,5 +1,6 @@
 import Estimator from '@/pages/estimator'
 import WorkPackage from '@/pages/estimator/work-package'
+import Overview from '@/pages/overview'
 import Project from '@/pages/project'
 import DetailProject from '@/pages/project/detail'
 import Ticket from '@/pages/project/ticket'
@@ -8,7 +9,7 @@ import type { RoutesProps } from '@/types/utils'
 export const routes: RoutesProps[] = [
   {
     path: '/',
-    element: <div>Overview</div>,
+    element: <Overview />,
     title: 'Overview',
     fallback: <div>Đang tải trang chủ...</div>
   },
