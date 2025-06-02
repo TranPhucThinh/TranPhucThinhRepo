@@ -22,3 +22,39 @@ export type MenuProps = {
     icon?: LucideIcon
   }
 }
+
+export type JsonSchema = {
+  type: string
+  title?: string
+  properties: Record<string, JsonSchemaProperty>
+  required?: string[]
+}
+
+export type FormData = {
+  [key: string]: string | number | boolean
+}
+
+export type JsonSchemaProperty = {
+  type: string
+  title: string
+  description?: string
+  enum?: string[]
+  required?: string[]
+}
+
+export type FormFieldProps = {
+  field: JsonSchemaProperty
+  value: string | number | boolean
+  onChange: (value: string | number | boolean) => void
+}
+
+export type AddressInputProps = {
+  value: string
+  label: string
+  onChange: (value: string) => void
+}
+
+export type FormState = {
+  data: FormData
+  schema: string
+}

@@ -1,11 +1,7 @@
 import JsonFormRenderer from '@/components/json-form-renderer'
 
 const Overview = () => {
-  return (
-    <div>
-      <JsonFormRenderer />
-    </div>
-  )
+  return <JsonFormRenderer />
 }
 
 export default Overview

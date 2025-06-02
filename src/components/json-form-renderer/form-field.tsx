@@ -1,21 +1,8 @@
+import type { FormFieldProps } from '@/types/utils'
 import { Checkbox } from '../ui/checkbox'
 import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import VietnameseAddressInput from './address-input'
-
-export type JsonSchemaProperty = {
-  type: string
-  title: string
-  description?: string
-  enum?: string[]
-  required?: string[]
-}
-
-type FormFieldProps = {
-  field: JsonSchemaProperty
-  value: string | number | boolean
-  onChange: (value: string | number | boolean) => void
-}
 
 const FormField: React.FC<FormFieldProps> = ({ field, value, onChange }) => {
   const { type, title, description, enum: enumValues } = field
@@ -49,6 +36,7 @@ const FormField: React.FC<FormFieldProps> = ({ field, value, onChange }) => {
           </div>
         )
       }
+
       return (
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-1'>{title}</label>

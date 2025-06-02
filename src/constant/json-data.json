@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "title": "Thông tin cá nhân",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Họ và tên",
+      "description": "Nhập họ và tên đầy đủ"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "description": "Địa chỉ email"
+    },
+    "age": {
+      "type": "integer",
+      "title": "Tuổi",
+      "description": "Tuổi của bạn"
+    },
+    "address": {
+      "type": "vietnamese-address",
+      "title": "Địa chỉ"
+    },
+    "gender": {
+      "type": "string",
+      "title": "Giới tính",
+      "enum": [
+        "Nam",
+        "Nữ",
+        "Khác"
+      ]
+    },
+    "subscribe": {
+      "type": "boolean",
+      "title": "Đăng ký nhận thông báo"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ]
+}

@@ -1,49 +1,57 @@
 import { useEffect, useState } from 'react'
-import type { JsonSchemaProperty } from './form-field'
-import FormField from './form-field'
-import { Textarea } from '../ui/textarea'
+import { useDispatch } from 'react-redux'
+
+import type { AppDispatch, RootState } from '@/store'
+import { useAppSelector } from '@/store/hooks'
+import { loadFromStorage, resetForm, updateField, updateSchema } from '@/store/reducers/json-form'
 import { Button } from '../ui/button'
-
-type JsonSchema = {
-  type: string
-  title?: string
-  properties: Record<string, JsonSchemaProperty>
-  required?: string[]
-}
-
-type FormData = {
-  [key: string]: string | number | boolean
-}
+import { Textarea } from '../ui/textarea'
+import FormField from './form-field'
+import type { FormState, JsonSchema, JsonSchemaProperty } from '@/types/utils'
 
 const JsonFormRenderer = () => {
-  const [jsonSchema, setJsonSchema] = useState<string>('')
-  const [formData, setFormData] = useState<FormData>({})
+  const dispatch = useDispatch<AppDispatch>()
+  const { data: formData, schema: jsonSchema } = useAppSelector((state: RootState) => state.jsonForm)
+
   const [parsedSchema, setParsedSchema] = useState<JsonSchema | null>(null)
   const [error, setError] = useState<string>('')
 
   const handleSchemaChange = (value: string): void => {
-    setJsonSchema(value)
+    dispatch(updateSchema(value))
+  }
+
+  const handleFieldChange = (fieldName: string, value: string | number | boolean): void => {
+    dispatch(updateField({ fieldName, value }))
+  }
+
+  const handleResetForm = (): void => {
+    dispatch(resetForm())
+  }
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const savedState = localStorage.getItem('formStore')
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState) as FormState
+        dispatch(loadFromStorage(parsed))
+      } catch (e) {
+        console.error('Error loading saved form data:', e)
+      }
+    }
+  }, [dispatch])
+
+  // Parse schema whenever it changes
+  useEffect(() => {
     try {
-      const parsed = JSON.parse(value) as JsonSchema
+      const parsed = JSON.parse(jsonSchema) as JsonSchema
       setParsedSchema(parsed)
       setError('')
     } catch (e) {
       setError('Invalid JSON Schema: ' + (e as Error).message)
       setParsedSchema(null)
     }
-  }
-
-  const handleFieldChange = (fieldName: string, value: string | number | boolean): void => {
-    setFormData((prev: FormData) => ({
-      ...prev,
-      [fieldName]: value
-    }))
-  }
-
-  const resetForm = (): void => {
-    setFormData({})
-    localStorage.removeItem('formData')
-  }
+  }, [jsonSchema])
 
   const renderForm = (): JSX.Element | null => {
     if (!parsedSchema || !parsedSchema.properties) return null
@@ -65,21 +73,6 @@ const JsonFormRenderer = () => {
     )
   }
 
-  useEffect(() => {
-    const savedData = localStorage.getItem('formData')
-    if (savedData) {
-      try {
-        const parsed = JSON.parse(savedData) as FormData
-        setFormData(parsed)
-      } catch (e) {
-        console.error('Error loading saved form data:', e)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData))
-  }, [formData])
   return (
     <div className='max-w-6xl mx-auto p-6 bg-white min-h-screen'>
       <h1 className='text-2xl font-bold text-gray-800 mb-6'>JSON Form Renderer</h1>
@@ -107,7 +100,7 @@ const JsonFormRenderer = () => {
           </div>
 
           <Button
-            onClick={resetForm}
+            onClick={handleResetForm}
             className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors'
             type='button'
           >

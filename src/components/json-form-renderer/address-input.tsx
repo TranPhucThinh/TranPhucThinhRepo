@@ -1,16 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { vietnamAddressData } from '@/constant/location'
+import type { AddressInputProps } from '@/types/utils'
 import { Input } from '../ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-type AddressInputProps = {
-  value: string
-  label: string
-  onChange: (value: string) => void
-}
-
-const VietnameseAddressInput: React.FC<AddressInputProps> = ({ value, onChange, label }) => {
+const VietnameseAddressInput: React.FC<AddressInputProps> = ({ value, label, onChange }) => {
   const [province, setProvince] = useState<string>('')
   const [district, setDistrict] = useState<string>('')
   const [street, setStreet] = useState<string>('')
@@ -35,6 +30,21 @@ const VietnameseAddressInput: React.FC<AddressInputProps> = ({ value, onChange, 
     const fullAddress = [street, district, province].filter(Boolean).join(', ')
     onChange(fullAddress)
   }
+
+  useEffect(() => {
+    if (value) {
+      const parts = value.split(', ')
+      if (parts.length >= 3) {
+        setStreet(parts[0] || '')
+        setDistrict(parts[1] || '')
+        setProvince(parts[2] || '')
+      }
+    } else {
+      setStreet('')
+      setDistrict('')
+      setProvince('')
+    }
+  }, [value])
 
   return (
     <div className='space-y-3'>
