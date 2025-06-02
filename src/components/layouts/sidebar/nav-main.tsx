@@ -17,7 +17,7 @@ export const NavMain = () => {
   }
 
   return (
-    <SidebarGroup className='p-4 pt-0'>
+    <SidebarGroup>
       <SidebarMenu>
         {MENU.map((item) => (
           <SidebarMenuItem key={item.title} className='rounded-sm overflow-hidden'>
