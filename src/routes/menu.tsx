@@ -1,6 +1,9 @@
+import JsonFormRenderer from '@/components/json-form-renderer'
+import Assignments from '@/pages/assignment'
 import Estimator from '@/pages/estimator'
 import WorkPackage from '@/pages/estimator/work-package'
 import Overview from '@/pages/overview'
+import PaginateAssignment from '@/pages/paginate-assignment'
 import Project from '@/pages/project'
 import DetailProject from '@/pages/project/detail'
 import Ticket from '@/pages/project/ticket'
@@ -48,5 +51,23 @@ export const routes: RoutesProps[] = [
     element: <Ticket />,
     title: 'Ticket detail',
     fallback: <div>Đang tải trang Ticket detail...</div>
+  },
+  {
+    path: '/assignments',
+    element: <Assignments />,
+    title: 'Assignments',
+    fallback: <div>Đang tải trang assignments...</div>
+  },
+  {
+    path: '/assignments/json-form',
+    element: <JsonFormRenderer />,
+    title: 'Json form renderer assignment',
+    fallback: <div>Đang tải trang assignments...</div>
+  },
+  {
+    path: '/assignments/paginate',
+    element: <PaginateAssignment />,
+    title: 'Paginate assignment',
+    fallback: <div>Đang tải trang paginate...</div>
   }
 ]

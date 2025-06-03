@@ -1,4 +1,12 @@
-import { BookOpenText, Building2, Calculator, CircleHelp, LayoutDashboard, SquarePen } from 'lucide-react'
+import {
+  BookOpenText,
+  Building2,
+  Calculator,
+  CalendarCheck,
+  CircleHelp,
+  LayoutDashboard,
+  SquarePen
+} from 'lucide-react'
 
 import type { MenuProps } from '@/types/utils'
 
@@ -22,6 +30,11 @@ export const MENU: MenuProps[] = [
     title: 'Projects',
     path: '/projects',
     icon: SquarePen
+  },
+  {
+    title: 'Assignments',
+    path: '/assignments',
+    icon: CalendarCheck
   }
 ]
 
