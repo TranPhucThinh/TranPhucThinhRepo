@@ -1,8 +1,15 @@
+import { tickets } from '@/mocks'
 import Activity from '../detail/components/activity'
 import Description from '../detail/components/description'
 import Properties from '../detail/components/properties'
+import { useParams } from 'react-router-dom'
 
 const Ticket = () => {
+  const { ticketId } = useParams()
+
+  const ticket = tickets.find((t) => t.id === Number(ticketId))
+  console.log(' DetailProject ~ ticket:', ticket)
+
   return (
     <div className='grid grid-cols-4 h-full'>
       {/* Left side */}

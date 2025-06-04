@@ -4,7 +4,10 @@ const Estimator = () => {
   const navigate = useNavigate()
 
   return (
-    <p className='hover:cursor-pointer mt-4' onClick={() => navigate('/estimator/work-packages')}>
+    <p
+      className='hover:cursor-pointer hover:text-primary-blue mt-4 inline-block'
+      onClick={() => navigate('/estimator/work-packages')}
+    >
       Go to Work Packages
     </p>
   )

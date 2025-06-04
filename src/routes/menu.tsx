@@ -47,7 +47,7 @@ export const routes: RoutesProps[] = [
     fallback: <div>Đang tải trang Projects detail...</div>
   },
   {
-    path: '/projects/:id/:ticketId/detail',
+    path: '/projects/:id/detail/:ticketId/ticket',
     element: <Ticket />,
     title: 'Ticket detail',
     fallback: <div>Đang tải trang Ticket detail...</div>

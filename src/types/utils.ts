@@ -58,3 +58,13 @@ export type FormState = {
   data: FormData
   schema: string
 }
+
+export type BreadcrumbItem = {
+  title: string
+  path?: string
+  isActive?: boolean
+}
+
+export type BreadcrumbState = {
+  dynamicItems: Record<string, string>
+}

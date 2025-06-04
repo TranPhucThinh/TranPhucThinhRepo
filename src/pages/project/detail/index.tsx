@@ -1,24 +1,31 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
+import { projects, tickets } from '@/mocks'
 
 const DetailProject = () => {
   const navigate = useNavigate()
+  const { id } = useParams()
+
+  const project = projects.find((p) => p.id === Number(id))
+  console.log(' DetailProject ~ project:', project)
 
   return (
     <div className='grid grid-cols-4 gap-2 mt-4'>
-      <Card className='max-h-48 gap-1 hover:cursor-pointer' onClick={() => navigate('/projects/1/2/detail')}>
-        <CardHeader>
-          <CardDescription>[Ticket name]</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className='text-sm min-h-25 overflow-hidden line-clamp-3'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus qui recusandae dolores, rem distinctio quia
-            totam excepturi odio reiciendis quasi sunt facilis commodi, similique a suscipit dicta itaque? Quibusdam,
-            optio.
-          </p>
-        </CardContent>
-      </Card>
+      {tickets.map((ticket) => (
+        <Card
+          key={ticket.id}
+          className='max-h-48 gap-1 hover:cursor-pointer'
+          onClick={() => navigate(`/projects/${id}/detail/${ticket.id}/ticket`)}
+        >
+          <CardHeader>
+            <CardDescription>{ticket.name}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className='text-sm min-h-25 overflow-hidden line-clamp-3'>{ticket.description}</p>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   )
 }
