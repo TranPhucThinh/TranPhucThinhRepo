@@ -9,11 +9,11 @@ const Project = () => {
   return (
     <>
       <h2 className='mt-4 font-semibold text-xl'>Project List</h2>
-      <div className='grid grid-cols-4 gap-2 mt-4'>
+      <div className='grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-2 mt-4'>
         {projects.map((project) => (
           <Card
             key={project.id}
-            className='max-h-48 gap-1 hover:cursor-pointer'
+            className='col-span-1 max-h-48 gap-1 hover:cursor-pointer'
             onClick={() => navigate(`/projects/${project.id}/detail`)}
           >
             <CardHeader>

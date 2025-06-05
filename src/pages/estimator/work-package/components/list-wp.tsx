@@ -71,9 +71,9 @@ const ListWorkPackages = () => {
         <Input className='pl-4' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
         {!inputValue && <Search className='absolute left-4 top-[10px] text-primary-gray' size={16} />}
       </div>
-      <div className='grid grid-cols-3 gap-x-6 gap-y-4'>
+      <div className='grid md:grid-cols-4 xl:grid-cols-3 gap-x-6 gap-y-4'>
         {wpData.map((wp) => (
-          <Card key={wp.id} className='col-span-1 gap-[14px] py-3'>
+          <Card key={wp.id} className='md:col-span-2 xl:col-span-1 gap-[14px] py-3'>
             <CardHeader className='flex items-center justify-between px-3 hover:cursor-pointer'>
               <CardTitle className='text-lg/[26px] font-medium'>{wp.title}</CardTitle>
               <ChevronRight size={20} />
